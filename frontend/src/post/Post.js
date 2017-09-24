@@ -12,6 +12,7 @@ class Post extends Component {
   state = {
     loadingPost: false,
     loadingComments: false,
+    postingComment: false,
     post: {},
     comments: []
   }
@@ -37,7 +38,9 @@ class Post extends Component {
     PostApi.getPostComment(postId)
       .then(comments => {
         this.setState({
-          comments,
+          comments: comments.sort((c1, c2) => {
+            return c1.timestamp < c2.timestamp
+          }),
           loadingComments: true
         })
       })
@@ -45,6 +48,7 @@ class Post extends Component {
   onPostComment = e => {
     e.preventDefault()
     const values = serializeForm(e.target, { hash: true })
+
 
     if(!values.author) {
       this.msg.error('You need to provide your name to place a comment')
@@ -56,15 +60,23 @@ class Post extends Component {
       return
     }
 
-    this.setState(state => {
-      comments: state.comments.unshift({
-        id: uuid(),
-        parentId: values.parentId,
-        author: values.author,
-        body: values.body,
-        timestamp: new Date().getTime()
+    const comment = {
+      id: uuid(),
+      parentId: values.parentId,
+      author: values.author,
+      body: values.body,
+      timestamp: new Date().getTime()
+    }
+
+    this.setState({ postingComment: true })
+    PostApi.postComment(comment)
+      .then(response => {
+        this.setState(state => {
+          comments: state.comments.unshift(comment)
+          postingComment: true
+        })
       })
-    })
+
 
     e.target.author.value = ''
     e.target.body.value = ''
