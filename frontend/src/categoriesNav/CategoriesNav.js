@@ -1,6 +1,12 @@
 import React, { Component } from 'react'
 
 class CategoriesNav extends Component {
+  state = {
+    categories: []
+  }
+  componentDidMount() {
+    
+  }
   render() {
     return (
       <nav className="navbar navbar-default">

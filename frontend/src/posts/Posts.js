@@ -33,7 +33,7 @@ class Posts extends Component {
     return (
       <div className='posts'>
         {posts && posts.map(post => (
-          <PostThread post={post} />
+          <PostThread key={post.id} post={post} />
         ))}
       </div>
     )
