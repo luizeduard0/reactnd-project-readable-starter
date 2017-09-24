@@ -1,11 +1,23 @@
 .post-comments {
   margin: 20px 0;
-  padding-top: 10px;
   border: 1px solid #eee;
   background: #fff;
 }
 
 .post-comments .no-comments {
-  padding: 0px 10px;
+  font-size: 11px;
+  padding: 5px 10px;
   color: #aaa;
+}
+
+.new-comment {
+  display: block;
+  border-bottom: 1px solid #eee;
+}
+
+.new-comment input {
+  width: 100%;
+  border: 0px;
+  padding: 10px;
+  outline: none;
 }

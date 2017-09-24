@@ -39,6 +39,10 @@ class Post extends Component {
         })
       })
   }
+  onPostComment = e => {
+    e.preventDefault()
+    console.log('ON POST COMMENT', e.target)
+  }
   render() {
     const { post, comments, loadingPost, loadingComments } = this.state
     return (
@@ -57,7 +61,7 @@ class Post extends Component {
               <div className='post-body'>
                 <Vote post={post} />
                 {post.body}
-                <Comments comments={comments} />
+                <Comments onPostComment={this.onPostComment} comments={comments} />
               </div>
             </div>
           ) || (
