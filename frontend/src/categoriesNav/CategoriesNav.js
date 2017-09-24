@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
 import * as CategoryApi from './api'
 
 class CategoriesNav extends Component {
@@ -33,9 +33,11 @@ class CategoriesNav extends Component {
             <ul className="nav navbar-nav">
               {categories && categories.map(category => (
                 <li key={category.name}>
-                  <Link to={`/${category.name}/posts`}>
+                  <NavLink
+                    to={`/${category.name}/posts`}
+                    activeClassName='selected'>
                     {category.name}
-                  </Link>
+                  </NavLink>
                 </li>
               ))}
             </ul>
