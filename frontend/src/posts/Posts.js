@@ -10,7 +10,12 @@ class Posts extends Component {
   }
 
   componentDidMount() {
-    this.getPosts(this.props.category)
+    let category = typeof this.props.match !== 'undefined' ? this.props.match.params.category : null
+    this.getPosts(category)
+  }
+  componentWillReceiveProps() {
+    let category = typeof this.props.match !== 'undefined' ? this.props.match.params.category : null
+    this.getPosts(category)
   }
   getPosts(category) {
     let response = null
@@ -35,6 +40,9 @@ class Posts extends Component {
         {posts && posts.map(post => (
           <PostThread key={post.id} post={post} />
         ))}
+        {!posts && (
+          <p>No posts to display</p>
+        )}
       </div>
     )
   }

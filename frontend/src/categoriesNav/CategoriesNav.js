@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import * as CategoryApi from './api'
 
 class CategoriesNav extends Component {
@@ -25,13 +26,17 @@ class CategoriesNav extends Component {
               <span className="icon-bar"></span>
               <span className="icon-bar"></span>
             </button>
-            <a className="navbar-brand" href="#">Readable</a>
+            <Link to='/' className='navbar-brand'>Readable</Link>
           </div>
 
           <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul className="nav navbar-nav">
               {categories && categories.map(category => (
-                <li key={category.name}><a href="#">{category.name}</a></li>
+                <li key={category.name}>
+                  <Link to={`/${category.name}/posts`}>
+                    {category.name}
+                  </Link>
+                </li>
               ))}
             </ul>
           </div>
