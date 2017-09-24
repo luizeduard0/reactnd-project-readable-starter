@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import Categories from './../categories/Categories'
+import CategoriesNav from './../categoriesNav/CategoriesNav'
 import './App.css';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <Categories />
+        <CategoriesNav />
       </div>
     );
   }

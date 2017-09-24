@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-class Categories extends Component {
+class CategoriesNav extends Component {
   render() {
     return (
       <nav className="navbar navbar-default">
@@ -27,4 +27,4 @@ class Categories extends Component {
   }
 }
 
-export default Categories
+export default CategoriesNav
