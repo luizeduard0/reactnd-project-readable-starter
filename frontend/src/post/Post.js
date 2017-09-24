@@ -4,6 +4,7 @@ import Vote from './../vote/Vote'
 import ContentLoader from 'react-content-loader'
 import Comments from './../comments/Comments'
 import serializeForm from 'form-serialize'
+import AlertContainer from 'react-alert'
 import './style.css'
 
 class Post extends Component {
@@ -45,15 +46,17 @@ class Post extends Component {
     const values = serializeForm(e.target, { hash: true })
 
     if(!values.author) {
-
+      this.msg.error('You need to provide your name to place a comment')
+      return
     }
 
     if(!values.body) {
-      
+      this.msg.error('You can\'t create a blank comment')
+      return
     }
 
     this.setState(state => {
-      comments: state.comments.push({
+      comments: state.comments.unshift({
         id: Math.random().toString(36).substr(-8),
         parentId: values.parentId,
         author: values.author,
@@ -64,10 +67,17 @@ class Post extends Component {
     e.target.author.value = ''
     e.target.body.value = ''
   }
+  showAlert = () => {
+    this.msg.show('Some text or component', {
+      time: 2000,
+      type: 'success'
+    })
+  }
   render() {
     const { post, comments, loadingPost, loadingComments } = this.state
     return (
       <div className='post-wrapper'>
+        <AlertContainer ref={a => this.msg = a} {...this.alertOptions} />
         {loadingPost && (
           <div style={{maxWidth: '500px'}}>
             <ContentLoader type="list" />

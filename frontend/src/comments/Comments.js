@@ -10,11 +10,13 @@ const Comments = ({ post, comments = [], onPostComment }) => (
         <input
           type="text"
           name='author'
-          placeholder="Type your name" />
+          placeholder="Type your name"
+          autoComplete="off" />
         <input
           type="text"
           name='body'
-          placeholder="Type your comment here" />
+          placeholder="Type your comment here"
+          autoComplete="off" />
           <button type="submit" style={{ display: 'none' }}></button>
       </form>
     </div>
