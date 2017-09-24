@@ -4,6 +4,7 @@ import './style.css'
 
 const Comment = ({ comment }) => (
   <div className='post-comment'>
+    <div className='post-comment-date'>{comment.timestamp}</div>
     <div className='post-comment-avatar'>
       <Avatar name={comment.author} size={40} round={true} />
     </div>

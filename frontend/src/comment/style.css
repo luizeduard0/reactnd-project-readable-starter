@@ -11,3 +11,8 @@
 .post-comment-author {
   font-weight: bold;
 }
+
+.post-comment-date {
+  float: right;
+  color: #aaa;
+}
