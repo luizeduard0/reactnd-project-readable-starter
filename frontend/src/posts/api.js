@@ -7,3 +7,7 @@ export const getPosts = () => {
 export const getPostsByCategory = category => {
   return get(`/${category}/posts`)
 }
+
+export const getPost = id => {
+  return get(`/posts/${id}`)
+}
