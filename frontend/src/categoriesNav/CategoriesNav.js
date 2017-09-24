@@ -4,7 +4,8 @@ import * as CategoryApi from './api'
 
 class CategoriesNav extends Component {
   state = {
-    categories: []
+    categories: [],
+    currentCategory: null
   }
   componentDidMount() {
     CategoryApi.getCategories()
@@ -15,7 +16,7 @@ class CategoriesNav extends Component {
       })
   }
   render() {
-    const { categories } = this.state
+    const { categories, currentCategory } = this.state
     return (
       <nav className="navbar navbar-default">
         <div className="container-fluid">
@@ -31,9 +32,12 @@ class CategoriesNav extends Component {
 
           <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul className="nav navbar-nav">
+              <li className={!currentCategory ? 'active' : null}><NavLink to={`/`} onClick={() => this.setState({ currentCategory: null })}>All</NavLink></li>
               {categories && categories.map(category => (
-                <li key={category.name}>
-                  <NavLink to={`/${category.name}/posts`}>
+                <li key={category.name} className={category.name === currentCategory ? 'active' : null}>
+                  <NavLink
+                    to={`/${category.name}/posts`}
+                    onClick={() => this.setState({ currentCategory: category.name })}>
                     {category.name}
                   </NavLink>
                 </li>
