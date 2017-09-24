@@ -1,0 +1,11 @@
+.post-comments {
+  margin: 20px 0;
+  padding-top: 10px;
+  border: 1px solid #eee;
+  background: #fff;
+}
+
+.post-comments .no-comments {
+  padding: 0px 10px;
+  color: #aaa;
+}

@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import * as PostApi from './../posts/api'
 import Vote from './../vote/Vote'
 import ContentLoader from 'react-content-loader'
+import Comments from './../comments/Comments'
+import './style.css'
 
 class Post extends Component {
   state = {
@@ -38,7 +40,7 @@ class Post extends Component {
       })
   }
   render() {
-    const { post, loadingPost, loadingComments } = this.state
+    const { post, comments, loadingPost, loadingComments } = this.state
     return (
       <div className='post-wrapper'>
         {loadingPost && (
@@ -48,10 +50,14 @@ class Post extends Component {
         ) || (
           post.id && (
             <div className='post'>
-              <h2 className='post-title'>{post.title}</h2>
+              <h2 className='post-title'>
+                {post.title}
+                <small className='post-author'>{post.author}</small>
+              </h2>
               <div className='post-body'>
                 <Vote post={post} />
                 {post.body}
+                <Comments comments={comments} />
               </div>
             </div>
           ) || (

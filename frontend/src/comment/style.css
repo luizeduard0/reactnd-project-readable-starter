@@ -1,0 +1,13 @@
+.post-comment {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.post-comment-avatar {
+  float: left;
+  margin-right: 10px;
+}
+
+.post-comment-author {
+  font-weight: bold;
+}

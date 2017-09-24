@@ -1,0 +1,18 @@
+.post-wrapper {
+}
+
+.post-wrapper .post {
+  padding: 20px;
+  box-shadow: rgba(0,0,0,.1) 5px 5px 20px;
+}
+
+.post-wrapper .post .post-title{
+}
+
+.post-wrapper .post .post-title .post-author{
+  display: block;
+}
+
+.post-wrapper .post .post-body{
+  padding: 15px 5px;
+}
