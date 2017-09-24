@@ -1,0 +1,24 @@
+.post-thread {
+  padding: 10px;
+  border: 1px solid #eee;
+  border-bottom: 0;
+  cursor: pointer;
+}
+
+.post-thread:hover {
+  background: #fafafa;
+}
+
+.post-thread:last-child {
+  border-bottom: 1px solid #eee;
+}
+
+.post-thread .post-thread-title {
+  font-size: 14px;
+  margin: 0;
+  padding: 0;
+}
+
+.post-thread .post-thread-author {
+  color: #888;
+}

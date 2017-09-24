@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import * as PostApi from './api'
+import PostThread from './../postThread/PostThread'
+import './style.css'
 
 class Posts extends Component {
 
@@ -27,9 +29,12 @@ class Posts extends Component {
     })
   }
   render() {
+    const { posts } = this.state
     return (
       <div className='posts'>
-        Posts...
+        {posts && posts.map(post => (
+          <PostThread post={post} />
+        ))}
       </div>
     )
   }
