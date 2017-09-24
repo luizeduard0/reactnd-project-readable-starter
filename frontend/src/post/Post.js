@@ -81,6 +81,9 @@ class Post extends Component {
     e.target.author.value = ''
     e.target.body.value = ''
   }
+  onVote = vote => {
+
+  }
   showAlert = () => {
     this.msg.show('Some text or component', {
       time: 2000,
@@ -104,7 +107,7 @@ class Post extends Component {
                 <small className='post-author'>{post.author}</small>
               </h2>
               <div className='post-body'>
-                <Vote post={post} />
+                <Vote post={post} onVote={this.onVote} />
                 {post.body}
                 <Comments post={post} onPostComment={this.onPostComment} comments={comments} />
               </div>
