@@ -1,5 +1,6 @@
 import React from 'react'
 import Comment from './../comment/Comment'
+import PropTypes from 'prop-types'
 import './style.css'
 
 const Comments = ({ post, comments = [], onPostComment }) => (
@@ -29,5 +30,11 @@ const Comments = ({ post, comments = [], onPostComment }) => (
     )}
   </div>
 )
+
+Comments.propTypes = {
+  post: PropTypes.object.isRequired,
+  comments: PropTypes.array,
+  onPostComment: PropTypes.func.isRequired
+}
 
 export default Comments
