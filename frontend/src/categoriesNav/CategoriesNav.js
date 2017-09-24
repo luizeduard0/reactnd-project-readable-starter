@@ -1,13 +1,20 @@
 import React, { Component } from 'react'
+import * as CategoryApi from './api'
 
 class CategoriesNav extends Component {
   state = {
     categories: []
   }
   componentDidMount() {
-    
+    CategoryApi.getCategories()
+      .then(response => {
+        this.setState({
+          categories: response.categories
+        })
+      })
   }
   render() {
+    const { categories } = this.state
     return (
       <nav className="navbar navbar-default">
         <div className="container-fluid">
@@ -23,8 +30,9 @@ class CategoriesNav extends Component {
 
           <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul className="nav navbar-nav">
-              <li className="active"><a href="#">Category One</a></li>
-              <li><a href="#">Category Two</a></li>
+              {categories && categories.map(category => (
+                <li key={category.name}><a href="#">{category.name}</a></li>
+              ))}
             </ul>
           </div>
         </div>
