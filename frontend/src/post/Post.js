@@ -3,6 +3,7 @@ import * as PostApi from './../posts/api'
 import Vote from './../vote/Vote'
 import ContentLoader from 'react-content-loader'
 import Comments from './../comments/Comments'
+import serializeForm from 'form-serialize'
 import './style.css'
 
 class Post extends Component {
@@ -41,7 +42,27 @@ class Post extends Component {
   }
   onPostComment = e => {
     e.preventDefault()
-    console.log('ON POST COMMENT', e.target)
+    const values = serializeForm(e.target, { hash: true })
+
+    if(!values.author) {
+
+    }
+
+    if(!values.body) {
+      
+    }
+
+    this.setState(state => {
+      comments: state.comments.push({
+        id: Math.random().toString(36).substr(-8),
+        parentId: values.parentId,
+        author: values.author,
+        body: values.body,
+      })
+    })
+
+    e.target.author.value = ''
+    e.target.body.value = ''
   }
   render() {
     const { post, comments, loadingPost, loadingComments } = this.state
@@ -61,7 +82,7 @@ class Post extends Component {
               <div className='post-body'>
                 <Vote post={post} />
                 {post.body}
-                <Comments onPostComment={this.onPostComment} comments={comments} />
+                <Comments post={post} onPostComment={this.onPostComment} comments={comments} />
               </div>
             </div>
           ) || (

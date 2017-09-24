@@ -2,12 +2,18 @@ import React from 'react'
 import Comment from './../comment/Comment'
 import './style.css'
 
-const Comments = ({ comments = [], onPostComment }) => (
+const Comments = ({ post, comments = [], onPostComment }) => (
   <div className='post-comments'>
     <div className='new-comment'>
       <form onSubmit={onPostComment}>
+        <input type="hidden" name='parentId' value={post.id} />
         <input
           type="text"
+          name='author'
+          placeholder="Type your name" />
+        <input
+          type="text"
+          name='body'
           placeholder="Type your comment here" />
           <button type="submit" style={{ display: 'none' }}></button>
       </form>
