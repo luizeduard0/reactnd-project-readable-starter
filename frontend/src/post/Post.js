@@ -5,6 +5,7 @@ import ContentLoader from 'react-content-loader'
 import Comments from './../comments/Comments'
 import serializeForm from 'form-serialize'
 import AlertContainer from 'react-alert'
+import { uuid } from './../utils/helpers'
 import './style.css'
 
 class Post extends Component {
@@ -57,10 +58,11 @@ class Post extends Component {
 
     this.setState(state => {
       comments: state.comments.unshift({
-        id: Math.random().toString(36).substr(-8),
+        id: uuid(),
         parentId: values.parentId,
         author: values.author,
         body: values.body,
+        timestamp: new Date().getTime()
       })
     })
 
