@@ -1,0 +1,23 @@
+.vote-tool {
+  display: inline-block;
+  float: right;
+}
+
+.vote-tool .to-vote {
+  display: none;
+  position: absolute;
+  right: 10px;
+  border: 1px solid #ddd;
+  box-shadow: rgba(0,0,0,.1) 2px 2px 5px;
+}
+
+.vote-tool .vote-result:hover .to-vote {
+  display: block;
+}
+
+.vote-tool .vote-result .to-vote button {
+  display: inline-block;
+  background: #fff;
+  border: 0;
+  padding: 5px 10px;
+}

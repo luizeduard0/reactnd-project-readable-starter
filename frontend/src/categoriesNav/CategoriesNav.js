@@ -33,9 +33,7 @@ class CategoriesNav extends Component {
             <ul className="nav navbar-nav">
               {categories && categories.map(category => (
                 <li key={category.name}>
-                  <NavLink
-                    to={`/${category.name}/posts`}
-                    activeClassName='selected'>
+                  <NavLink to={`/${category.name}/posts`}>
                     {category.name}
                   </NavLink>
                 </li>
