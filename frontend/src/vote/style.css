@@ -4,9 +4,9 @@
 }
 
 .vote-tool .to-vote {
-  display: none;
   position: absolute;
-  right: 10px;
+  margin-top: -20px;
+  right: 35px;
   border: 1px solid #ddd;
   box-shadow: rgba(0,0,0,.1) 2px 2px 5px;
 }
@@ -20,4 +20,40 @@
   background: #fff;
   border: 0;
   padding: 5px 10px;
+}
+
+.vote-tool .vote-result .to-vote .vote-like-it,
+.vote-tool .vote-result .to-vote .vote-dislike-it {
+  color: #aaa;
+  outline: none;
+}
+
+.vote-tool .vote-result .to-vote:hover .vote-dislike-it {
+  color: #d85757;
+}
+
+.vote-tool .vote-result .to-vote:hover .vote-like-it {
+  color: #349af7;
+}
+
+.vote-tool .vote-result .to-vote .vote-dislike-it {
+  border-right: 1px solid #eee;
+}
+
+.vote-tool .vote-result .to-vote .vote-like-it.active {
+  background-color: #edf7ff;
+  color: #349af7;
+}
+
+.vote-tool .vote-result .to-vote .vote-dislike-it.active {
+  color: #d85757;
+  background-color: #fff3f3;
+}
+
+.vote-tool .vote-result .to-vote .vote-like-it span {
+  margin-right: 5px;
+}
+
+.vote-tool .vote-result .to-vote .vote-dislike-it span {
+  margin-left: 5px;
 }
