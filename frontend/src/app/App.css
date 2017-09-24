@@ -1,3 +1,23 @@
 .app-body {
   margin: 10px;
 }
+
+/**
+ * 404 page
+ */
+
+.not-found-page {
+  width: 500px;
+  margin: 0 auto;
+  text-align: center;
+}
+.not-found-page .jumbo {
+  font-size: 50px;
+  text-align: center;
+  text-transform: uppercase;
+  color: rgba(0,0,0,.4);
+  letter-spacing: -9px;
+}
+.not-found-page h2 small{
+  display: block;
+}

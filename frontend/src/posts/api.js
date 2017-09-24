@@ -11,3 +11,7 @@ export const getPostsByCategory = category => {
 export const getPost = id => {
   return get(`/posts/${id}`)
 }
+
+export const getPostComment = id => {
+  return get(`/posts/${id}/comments`)
+}

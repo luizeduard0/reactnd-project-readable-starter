@@ -1,28 +1,69 @@
 import React, { Component } from 'react'
 import * as PostApi from './../posts/api'
 import Vote from './../vote/Vote'
+import ContentLoader from 'react-content-loader'
 
 class Post extends Component {
   state = {
-    post: {}
+    loadingPost: false,
+    loadingComments: false,
+    post: {},
+    comments: []
   }
   componentWillMount() {
-    PostApi.getPost(this.props.match.params.id)
+    const postId = typeof this.props.match !== 'undefined' ? this.props.match.params.id : null
+    if(postId) {
+      this.getPost(postId)
+      this.getPostComment(postId)
+    }
+  }
+  getPost = postId => {
+    this.setState({ loadingPost: true })
+    PostApi.getPost(postId)
       .then(post => {
         this.setState({
-          post
+          post,
+          loadingPost: false
+        })
+      })
+  }
+  getPostComment = postId => {
+    this.setState({ loadingComments: true })
+    PostApi.getPostComment(postId)
+      .then(comments => {
+        this.setState({
+          comments,
+          loadingComments: true
         })
       })
   }
   render() {
-    const { post } = this.state
+    const { post, loadingPost, loadingComments } = this.state
     return (
-      <div className='post'>
-        <h2 className='post-title'>{post.title}</h2>
-        <div class='post-body'>
-          <Vote post={post} />
-          {post.body}
-        </div>
+      <div className='post-wrapper'>
+        {loadingPost && (
+          <div style={{maxWidth: '500px'}}>
+            <ContentLoader type="list" />
+          </div>
+        ) || (
+          post.id && (
+            <div className='post'>
+              <h2 className='post-title'>{post.title}</h2>
+              <div className='post-body'>
+                <Vote post={post} />
+                {post.body}
+              </div>
+            </div>
+          ) || (
+            <div className='not-found-page'>
+              <div className='jumbo'>Whoops</div>
+              <h2>
+                Page not found
+                <small>404 &bull; Try using one of our categories above to find what you were looking for.</small>
+              </h2>
+            </div>
+          )
+        )}
       </div>
     )
   }
