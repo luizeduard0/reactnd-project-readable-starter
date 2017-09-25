@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
 import * as PostApi from './../posts/api'
 import Vote from './../vote/Vote'
 import ContentLoader from 'react-content-loader'
@@ -24,6 +26,12 @@ class Post extends Component {
     }
   }
   getPost = postId => {
+    if(this.props.posts[postId]) {
+      this.setState({
+        post: this.props.posts[postId]
+      })
+      return
+    }
     this.setState({ loadingPost: true })
     PostApi.getPost(postId)
       .then(post => {
@@ -127,4 +135,10 @@ class Post extends Component {
   }
 }
 
-export default Post
+function mapStateToProps({ posts }) {
+  return {
+    posts
+  }
+}
+
+export default withRouter(connect(mapStateToProps)(Post))
