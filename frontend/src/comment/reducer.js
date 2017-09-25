@@ -1,14 +1,17 @@
 import {
+  GET_COMMENTS,
   ADD_COMMENT,
   EDIT_COMMENT,
   DELETE_COMMENT,
   VOTE_COMMENT
 } from './actions'
 
-export function comment(state = {}, action) {
+export default function comments(state = {}, action) {
+  const { id, body, author, parentId } = action
   switch(action.type) {
+    case GET_COMMENTS:
+      return state
     case ADD_COMMENT:
-    const { id, body, author, parentId } = action
       return {
         ...state,
         [id]: {
@@ -19,16 +22,14 @@ export function comment(state = {}, action) {
         }
       }
     case EDIT_COMMENT:
-      const { id, body } = action
       return {
         ...state,
         [id]: {
-          ...state[id]
+          ...state[id],
           body
         }
       }
     case DELETE_COMMENT:
-      const { id } = action
       const newState = state
       delete newState[id]
       return newState
