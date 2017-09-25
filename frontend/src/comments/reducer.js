@@ -7,10 +7,16 @@ import {
 } from './actions'
 
 export default function comments(state = {}, action) {
-  const { id, body, author, parentId } = action
+  const { id, body, author, parentId, timestamp, comments } = action
+  let newState = {}
+
   switch(action.type) {
     case GET_COMMENTS:
-      return state
+      newState = { ... state }
+      comments.map(comment => {
+        newState[comment.id] = comment
+      })
+      return newState
     case ADD_COMMENT:
       return {
         ...state,
@@ -30,7 +36,7 @@ export default function comments(state = {}, action) {
         }
       }
     case DELETE_COMMENT:
-      const newState = state
+      newState = state
       delete newState[id]
       return newState
     case VOTE_COMMENT:

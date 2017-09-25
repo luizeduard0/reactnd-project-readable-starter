@@ -4,10 +4,10 @@ export const EDIT_COMMENT   = 'EDIT_COMMENT'
 export const DELETE_COMMENT = 'DELETE_COMMENT'
 export const VOTE_COMMENT   = 'VOTE_COMMENT'
 
-export function getComments({ parentId }) {
+export function getComments(comments) {
   return {
     type: GET_COMMENTS,
-    parentId
+    comments
   }
 }
 
