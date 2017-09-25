@@ -74,7 +74,7 @@ class Comments extends Component {
             <input
               type="text"
               name='author'
-              placeholder="Type your name"
+              placeholder="Your name"
               autoComplete="off" />
               <input
                 type="text"
@@ -83,6 +83,10 @@ class Comments extends Component {
                 autoComplete="off" />
                 <button type="submit" style={{ display: 'none' }}></button>
               </form>
+            </div>
+            <div className='comments-balance'>
+              {comments.length === 1 ? `1 comment` : `${comments.length} comments `}
+              <i className='glyphicon glyphicon-comment'></i>
             </div>
             {comments.length && (
               comments.map(comment => (

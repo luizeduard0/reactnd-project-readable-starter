@@ -36,3 +36,10 @@
   padding: 10px;
   outline: none;
 }
+
+.comments-balance {
+  font-size: 12px;
+  color: #aaa;
+  padding: 5px 10px;
+  text-align: right;
+}
