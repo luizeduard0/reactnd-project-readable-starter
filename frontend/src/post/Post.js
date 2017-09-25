@@ -30,15 +30,7 @@ class Post extends Component {
       .then(post => {
         this.setState({ loadingPost: false })
         this.props.dispatch(getPost(post))
-        // this.setState({
-        //   post,
-        //   loadingPost: false
-        // })
       })
-  }
-
-  onVote = vote => {
-
   }
   showAlert = () => {
     this.msg.show('Some text or component', {
@@ -64,9 +56,17 @@ class Post extends Component {
                 <small className='post-author'>{post.author}</small>
               </h2>
               <div className='post-body'>
-                <Vote id={post.id} score={post.voteScore} onVote={this.onVote} type='post' />
+                <Vote
+                  id={post.id}
+                  score={post.voteScore}
+                  type='post' />
+
                 {post.body}
-                <Comments post={post} onPostComment={this.onPostComment} comments={comments} />
+
+                <Comments
+                  post={post}
+                  onPostComment={this.onPostComment}
+                  comments={comments} />
               </div>
             </div>
           ) || (
