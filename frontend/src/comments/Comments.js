@@ -100,10 +100,11 @@ class Comments extends Component {
   }
 }
 
-function mapStateToProps({ comments }) {
+function mapStateToProps({ comments }, props) {
   return {
     comments: Object.keys(comments)
                     .map(commentId => comments[commentId])
+                    .filter(comment => comment.parentId === props.post.id)
                     .sort((c1, c2) => {
                         return c1.timestamp < c2.timestamp
                      })
