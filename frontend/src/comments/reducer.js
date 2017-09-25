@@ -3,12 +3,14 @@ import {
   ADD_COMMENT,
   EDIT_COMMENT,
   DELETE_COMMENT,
-  VOTE_COMMENT
+  VOTE_COMMENT_UP,
+  VOTE_COMMENT_DOWN
 } from './actions'
 
 export default function comments(state = {}, action) {
   const { id, body, author, parentId, timestamp, comments } = action
   let newState = {}
+  let newVoteScore = 0
 
   switch(action.type) {
     case GET_COMMENTS:
@@ -39,7 +41,26 @@ export default function comments(state = {}, action) {
       newState = state
       delete newState[id]
       return newState
-    case VOTE_COMMENT:
+
+    case VOTE_COMMENT_UP:
+      newVoteScore = state[id].voteScore + 1
+      return {
+        ...state,
+        [id]: {
+          ...state[id],
+          voteScore: newVoteScore === 0 ? 1 : newVoteScore
+        }
+      }
+
+    case VOTE_COMMENT_DOWN:
+      newVoteScore = state[id].voteScore - 1
+      return {
+        ...state,
+        [id]: {
+          ...state[id],
+          voteScore: newVoteScore === 0 ? -1 : newVoteScore
+        }
+      }
     default:
       return state
   }

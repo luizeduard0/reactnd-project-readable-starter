@@ -2,8 +2,10 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import * as PostApi from './../posts/api'
+import * as CommentApi from './../comments/api'
 import PropTypes from 'prop-types'
 import { votePostUp, votePostDown } from './actions'
+import { voteCommentUp, voteCommentDown } from './../comments/actions'
 import './style.css'
 
 class Vote extends Component {
@@ -39,8 +41,16 @@ class Vote extends Component {
   }
   commentVoteHandler(id, downVote) {
     if(downVote) {
+      CommentApi.vote(id, 'downVote')
+        .then(res => {
+          this.props.dispatch(voteCommentDown(id))
+        })
       return
     }
+    CommentApi.vote(id, 'upVote')
+      .then(res => {
+        this.props.dispatch(voteCommentUp(id))
+      })
   }
   render () {
     const { id, score, type, size } = this.props

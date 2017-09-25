@@ -85,7 +85,8 @@ class Comments extends Component {
               </form>
             </div>
             <div className='comments-balance'>
-              {comments.length === 1 ? `1 comment` : `${comments.length} comments `}
+              {comments.length === 1 ? `1 comment` : `${comments.length} comments`}
+              {' '}
               <i className='glyphicon glyphicon-comment'></i>
             </div>
             {comments.length && (
