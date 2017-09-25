@@ -26,6 +26,8 @@ const Vote = ({ id, score, onVote }) => (
 )
 
 Vote.propTypes = {
+  id: PropTypes.string.isRequired,
+  score: PropTypes.number.isRequired,
   onVote: PropTypes.func.isRequired
 }
 
