@@ -63,7 +63,7 @@ class Post extends Component {
                 <small className='post-author'>{post.author}</small>
               </h2>
               <div className='post-body'>
-                <Vote post={post} onVote={this.onVote} />
+                <Vote id={post.id} score={post.voteScore} onVote={this.onVote} />
                 {post.body}
                 <Comments post={post} onPostComment={this.onPostComment} comments={comments} />
               </div>

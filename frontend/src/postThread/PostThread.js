@@ -8,7 +8,7 @@ class PostThread extends Component {
     const { post } = this.props
     return (
       <div className='post-thread'>
-        <Vote post={post} />
+        <Vote id={post.id} score={post.voteScore} />
         <Link to={`/posts/${post.id}`}>
           <h3 className='post-thread-title'>{ post.title }</h3>
           <small className='post-thread-author'>{ post.author }</small>
