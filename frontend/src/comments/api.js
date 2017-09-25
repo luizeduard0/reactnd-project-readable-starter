@@ -9,5 +9,5 @@ export const vote = (id, option) => {
 }
 
 export const getCommentDetail = id =>{
-  return get(`/comments/:${id}`)
+  return get(`/comments/${id}`)
 }

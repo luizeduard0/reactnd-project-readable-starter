@@ -64,10 +64,6 @@ class Comments extends Component {
     e.target.body.value = ''
   }
 
-  getCommentDetail = id => {
-
-  }
-
   render() {
 
     const { post, comments = [] } = this.props
@@ -97,7 +93,7 @@ class Comments extends Component {
             </div>
             {comments.length && (
               comments.map(comment => (
-                <Comment key={comment.id} comment={comment} getCommentDetail={this.getCommentDetail} />
+                <Comment key={comment.id} comment={comment} />
               ))
             ) || (
               <p className='no-comments'>No comments yet, be the first to comment.</p>

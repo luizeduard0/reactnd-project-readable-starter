@@ -9,7 +9,7 @@ class PostThread extends Component {
     return (
       <div className='post-thread'>
         <Vote id={post.id} score={post.voteScore} type='post' />
-        <Link to={`/posts/${post.id}`}>
+        <Link to={`/${post.category}/${post.id}`}>
           <h3 className='post-thread-title'>{ post.title }</h3>
           <small className='post-thread-author'>{ post.author }</small>
         </Link>

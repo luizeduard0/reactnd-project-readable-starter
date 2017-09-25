@@ -14,7 +14,7 @@ class App extends Component {
         <div className='app-body'>
           <Route exact path='/' component={Posts} />
           <Route path='/:category/posts' component={Posts} />
-          <Route path='/posts/:id' component={Post} />
+          <Route path='/:category/:id' component={Post} />
         </div>
 
       </div>
