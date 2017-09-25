@@ -4,8 +4,8 @@ import {
 } from './actions'
 
 import {
-  UP_VOTE,
-  DOWN_VOTE
+  UP_VOTE_POST,
+  DOWN_VOTE_POST
 } from './../vote/actions'
 
 export default function posts(state = {}, action) {
@@ -22,7 +22,7 @@ export default function posts(state = {}, action) {
         ...state,
         [action.post.id]: action.post
       }
-    case UP_VOTE:
+    case UP_VOTE_POST:
       return {
         ...state,
         [id]: {
@@ -30,7 +30,7 @@ export default function posts(state = {}, action) {
           voteScore: state[id].voteScore + 1
         }
       }
-    case DOWN_VOTE:
+    case DOWN_VOTE_POST:
       return {
         ...state,
         [id]: {

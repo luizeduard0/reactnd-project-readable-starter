@@ -19,3 +19,7 @@ export const getPostComment = id => {
 export const postComment = comment => {
   return post('/comments', comment)
 }
+
+export const vote = (id, option) => {
+  return post(`/posts/${id}`, {  option })
+}

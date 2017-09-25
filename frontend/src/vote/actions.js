@@ -1,16 +1,16 @@
-export const UP_VOTE = 'UP_VOTE'
-export const DOWN_VOTE = 'DOWN_VOTE'
+export const UP_VOTE_POST = 'UP_VOTE_POST'
+export const DOWN_VOTE_POST = 'DOWN_VOTE_POST'
 
-export function voteUp(id) {
+export function votePostUp(id) {
   return {
-    type: UP_VOTE,
+    type: UP_VOTE_POST,
     id
   }
 }
 
-export function voteDown(id) {
+export function votePostDown(id) {
   return {
-    type: DOWN_VOTE,
+    type: DOWN_VOTE_POST,
     id
   }
 }

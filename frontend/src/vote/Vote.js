@@ -1,17 +1,46 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
+import * as PostApi from './../posts/api'
 import PropTypes from 'prop-types'
-import { voteUp, voteDown } from './actions'
+import { votePostUp, votePostDown } from './actions'
 import './style.css'
 
 class Vote extends Component {
+  state = {
+    voted: false,
+  }
   onVote = (id, downVote = false) => {
-    if(downVote) {
-      this.props.dispatch(voteDown(id))
+    if(this.props.type === 'post') {
+      this.postVoteHandler(id, downVote)
       return
     }
-    this.props.dispatch(voteUp(id))
+    if(this.props.type === 'comment') {
+      this.commentVoteHandler(id, downVote)
+      return
+    }
+  }
+  postVoteHandler(id, downVote) {
+    if(downVote) {
+      if(this.state.voted === 'downVote') return
+      PostApi.vote(id, 'downVote')
+        .then(res => {
+          this.setState({voted: 'downVote'})
+          this.props.dispatch(votePostDown(id))
+        })
+      return
+    }
+    if(this.state.voted === 'upVote') return
+    PostApi.vote(id, 'upVote')
+      .then(res => {
+        this.setState({voted: 'upVote'})
+        this.props.dispatch(votePostUp(id))
+      })
+  }
+  commentVoteHandler(id, downVote) {
+    if(downVote) {
+      return
+    }
   }
   render () {
     const { id, score, type } = this.props
