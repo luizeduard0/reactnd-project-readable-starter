@@ -5,7 +5,6 @@
 
 .vote-tool .to-vote {
   position: absolute;
-  margin-top: -20px;
   right: 35px;
   border: 1px solid #ddd;
   box-shadow: rgba(0,0,0,.1) 2px 2px 5px;
@@ -57,3 +56,35 @@
 .vote-tool .vote-result .to-vote .vote-dislike-it span {
   margin-left: 5px;
 }
+
+
+/**
+ * small version
+ */
+ .vote-tool.small {
+   display: inline-block;
+   float: none;
+ }
+
+ .vote-tool.small .to-vote {
+   position:relative;
+   right: auto;
+   box-shadow: none;
+   border: 0;
+ }
+
+ .vote-tool.small .vote-result .to-vote button {
+   padding: 4px 5px;
+ }
+
+ .vote-tool.small .vote-result .to-vote .vote-dislike-it {
+   border-right: 0;
+ }
+ .vote-tool.small .vote-result .to-vote .vote-like-it,
+ .vote-tool.small .vote-result .to-vote .vote-dislike-it {
+   border-radius: 10px
+ }
+
+ .vote-tool.small .vote-result .to-vote .vote-like-it.active,
+ .vote-tool.small .vote-result .to-vote .vote-dislike-it.active {
+ }

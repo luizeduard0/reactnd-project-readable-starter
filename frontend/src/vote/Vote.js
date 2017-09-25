@@ -43,11 +43,10 @@ class Vote extends Component {
     }
   }
   render () {
-    const { id, score, type } = this.props
+    const { id, score, type, size } = this.props
     return (
-      <div className='vote-tool'>
+      <div className={`vote-tool ${size}`}>
         <div className='vote-result'>
-          <i className={score >= 0 ? 'glyphicon glyphicon-thumbs-up' : 'glyphicon glyphicon-thumbs-down'}></i> {score >= 0 ? score : score * -1}
           <div className='to-vote'>
             <button
               onClick={() => this.onVote(id, true)}
@@ -71,7 +70,8 @@ class Vote extends Component {
 Vote.propTypes = {
   id: PropTypes.string.isRequired,
   type: PropTypes.oneOf(['post','comment']).isRequired,
-  score: PropTypes.number.isRequired
+  score: PropTypes.number.isRequired,
+  size: PropTypes.oneOf(['small'])
 }
 
 export default withRouter(connect()(Vote))
