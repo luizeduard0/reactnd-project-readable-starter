@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import * as PostApi from './api'
 import { getPosts as getPostAction } from './actions'
@@ -39,13 +39,21 @@ class Posts extends Component {
   render() {
     const { posts } = this.props
     return (
-      <div className='posts'>
-        {posts && posts.map(post => (
-          <PostThread key={post.id} post={post} />
-        ))}
-        {!posts.length && (
-          <p>No posts to display</p>
-        )}
+      <div>
+        <Link
+          to="/new-post"
+          className='btn btn-primary pull-right' style={{ marginRight: '15px' }}>
+          New Post
+        </Link>
+        <div className='clearfix'></div>
+        <div className='posts'>
+          {posts && posts.map(post => (
+            <PostThread key={post.id} post={post} />
+          ))}
+          {!posts.length && (
+            <p>No posts to display</p>
+          )}
+        </div>
       </div>
     )
   }
