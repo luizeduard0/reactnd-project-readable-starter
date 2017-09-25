@@ -8,7 +8,7 @@ import {
 } from './actions'
 
 export default function comments(state = {}, action) {
-  const { id, body, author, parentId, timestamp, comments } = action
+  const { id, body, author, parentId, timestamp, comments, voteScore } = action
   let newState = {}
   let newVoteScore = 0
 
@@ -26,7 +26,8 @@ export default function comments(state = {}, action) {
           id,
           body,
           author,
-          parentId
+          parentId,
+          voteScore
         }
       }
     case EDIT_COMMENT:

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import * as PostApi from './../posts/api'
+import * as CommentApi from './../comments/api'
 import { addComment, getComments } from './actions'
 import Comment from './../comment/Comment'
 import PropTypes from 'prop-types'
@@ -48,11 +49,12 @@ class Comments extends Component {
       parentId: values.parentId,
       author: values.author,
       body: values.body,
-      timestamp: new Date().getTime()
+      timestamp: new Date().getTime(),
+      voteScore: 0
     }
 
     this.setState({ postingComment: true })
-    PostApi.postComment(comment)
+    CommentApi.postComment(comment)
       .then(response => {
         this.props.addComment(comment)
         this.setState({ postingComment: false })
@@ -60,6 +62,10 @@ class Comments extends Component {
 
     e.target.author.value = ''
     e.target.body.value = ''
+  }
+
+  getCommentDetail = id => {
+
   }
 
   render() {
@@ -91,7 +97,7 @@ class Comments extends Component {
             </div>
             {comments.length && (
               comments.map(comment => (
-                <Comment key={comment.id} comment={comment} />
+                <Comment key={comment.id} comment={comment} getCommentDetail={this.getCommentDetail} />
               ))
             ) || (
               <p className='no-comments'>No comments yet, be the first to comment.</p>

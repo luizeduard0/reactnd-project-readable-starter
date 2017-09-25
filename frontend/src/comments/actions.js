@@ -12,13 +12,15 @@ export function getComments(comments) {
   }
 }
 
-export function addComment({ id, body, author, parentId }) {
+export function addComment({ id, body, author, parentId, voteScore, timestamp }) {
   return {
     type: ADD_COMMENT,
     id,
     body,
     author,
-    parentId
+    parentId,
+    timestamp,
+    voteScore
   }
 }
 
