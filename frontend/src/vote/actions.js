@@ -10,7 +10,7 @@ export function voteUp(id) {
 
 export function voteDown(id) {
   return {
-    type: UP_VOTE,
+    type: DOWN_VOTE,
     id
   }
 }

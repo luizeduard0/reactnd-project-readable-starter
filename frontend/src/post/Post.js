@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import * as PostApi from './../posts/api'
+import { getPost } from './../posts/actions'
 import Vote from './../vote/Vote'
 import ContentLoader from 'react-content-loader'
 import Comments from './../comments/Comments'
@@ -21,19 +22,18 @@ class Post extends Component {
     if(postId) this.getPost(postId)
   }
   getPost = postId => {
-    if(this.props.posts[postId]) {
-      this.setState({
-        post: this.props.posts[postId]
-      })
+    if(this.props.post.id) {
       return
     }
     this.setState({ loadingPost: true })
     PostApi.getPost(postId)
       .then(post => {
-        this.setState({
-          post,
-          loadingPost: false
-        })
+        this.setState({ loadingPost: false })
+        this.props.dispatch(getPost(post))
+        // this.setState({
+        //   post,
+        //   loadingPost: false
+        // })
       })
   }
 
@@ -47,7 +47,8 @@ class Post extends Component {
     })
   }
   render() {
-    const { post, comments, loadingPost, loadingComments } = this.state
+    const { comments, loadingPost, loadingComments } = this.state
+    const { post } = this.props
     return (
       <div className='post-wrapper'>
         <AlertContainer ref={a => this.msg = a} {...this.alertOptions} />
@@ -63,7 +64,7 @@ class Post extends Component {
                 <small className='post-author'>{post.author}</small>
               </h2>
               <div className='post-body'>
-                <Vote id={post.id} score={post.voteScore} onVote={this.onVote} />
+                <Vote id={post.id} score={post.voteScore} onVote={this.onVote} type='post' />
                 {post.body}
                 <Comments post={post} onPostComment={this.onPostComment} comments={comments} />
               </div>
@@ -83,9 +84,9 @@ class Post extends Component {
   }
 }
 
-function mapStateToProps({ posts }) {
+function mapStateToProps({ posts }, props) {
   return {
-    posts
+    post: posts && typeof posts[props.match.params.id] !== 'undefined' ? posts[props.match.params.id] : {}
   }
 }
 
