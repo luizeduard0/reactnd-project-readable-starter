@@ -1,6 +1,11 @@
 .post-comment {
   padding: 10px;
   border-bottom: 1px solid #eee;
+  border-left: 3px solid transparent;
+}
+
+.post-comment:hover {
+  border-left: 3px solid #269df1;
 }
 
 .post-comment-avatar {

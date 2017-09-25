@@ -2,6 +2,7 @@
   margin: 20px 0;
   border: 1px solid #eee;
   background: #fff;
+  box-shadow: rgba(0,0,0,.1) 0px 20px 30px;
 }
 
 .post-comments .no-comments {
@@ -12,12 +13,14 @@
 
 .new-comment {
   display: block;
-  border-bottom: 1px solid #eee;
+  outline: 1px solid #ddd;
+  background: #fafafa;
 }
 
 .new-comment input {
   border: 0px;
   padding: 10px;
+  background: transparent;
 }
 
 .new-comment input[name=author] {
@@ -25,7 +28,7 @@
   border: 0px;
   padding: 10px;
   outline: none;
-  border-right: 1px solid #eee;
+  border-right: 1px solid #ddd;
 }
 .new-comment input[name=body] {
   width: 85%;
