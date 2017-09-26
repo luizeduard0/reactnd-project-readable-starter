@@ -19,7 +19,8 @@
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.13",
     "redux": "^3.7.2",
-    "redux-logger": "^3.0.6"
+    "redux-logger": "^3.0.6",
+    "string-humanize": "^1.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
