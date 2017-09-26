@@ -49,7 +49,7 @@ class PostForm extends Component {
           <div className='col-md-7'>
             <div className='preview-box'>
               <label className='label label-info pull-right'>PREVIEW</label>
-              <h2>{this.state.name || ';a'}</h2>
+              <h2>{this.state.name || 'Untitled'}</h2>
               <p style={{marginTop: '30px'}}>
                 {this.state.body || (
                   <div>
