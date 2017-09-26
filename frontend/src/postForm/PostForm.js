@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import ContentLoader from 'react-content-loader'
 import humanize from 'string-humanize'
 import './style.css'
@@ -10,6 +11,7 @@ class PostForm extends Component {
     category: null
   }
   render() {
+    const { categories } = this.props
     return (
       <div className='post-form'>
         <div className='row'>
@@ -35,9 +37,9 @@ class PostForm extends Component {
             <div className='form-group'>
               <select className='form-control'>
                 <option disabled>Choose the category</option>
-                <option>{humanize('react')}</option>
-                <option>{humanize('redux')}</option>
-                <option>{humanize('udacity')}</option>
+                {categories.map(category => (
+                  <option>{humanize(category.name)}</option>
+                ))}
               </select>
             </div>
             <div className='form-group'>
@@ -63,5 +65,9 @@ class PostForm extends Component {
     )
   }
 }
-
-export default PostForm
+function mapStateToProps({ categories }) {
+  return {
+    categories: Object.keys(categories).map(id => categories[id])
+  }
+}
+export default connect(mapStateToProps)(PostForm)
