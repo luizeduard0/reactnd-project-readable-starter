@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import ContentLoader from 'react-content-loader'
+import humanize from 'string-humanize'
 import './style.css'
 
 class PostForm extends Component {
@@ -34,9 +35,9 @@ class PostForm extends Component {
             <div className='form-group'>
               <select className='form-control'>
                 <option disabled>Choose the category</option>
-                <option>react</option>
-                <option>redux</option>
-                <option>udacity</option>
+                <option>{humanize('react')}</option>
+                <option>{humanize('redux')}</option>
+                <option>{humanize('udacity')}</option>
               </select>
             </div>
             <div className='form-group'>

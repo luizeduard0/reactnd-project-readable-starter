@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import * as CategoryApi from './api'
+import humanize from 'string-humanize'
 
 class CategoriesNav extends Component {
   state = {
@@ -38,7 +39,7 @@ class CategoriesNav extends Component {
                   <NavLink
                     to={`/${category.name}/posts`}
                     onClick={() => this.setState({ currentCategory: category.name })}>
-                    {category.name}
+                    {humanize(category.name)}
                   </NavLink>
                 </li>
               ))}
