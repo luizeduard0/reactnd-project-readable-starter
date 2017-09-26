@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { NavLink, Link } from 'react-router-dom'
 import * as CategoryApi from './api'
+import { getCategories } from './actions'
 import humanize from 'string-humanize'
 
 class CategoriesNav extends Component {
@@ -11,13 +13,15 @@ class CategoriesNav extends Component {
   componentDidMount() {
     CategoryApi.getCategories()
       .then(response => {
-        this.setState({
-          categories: response.categories
-        })
+        this.props.dispatch(getCategories(response.categories))
+        // this.setState({
+        //   categories: response.categories
+        // })
       })
   }
   render() {
-    const { categories, currentCategory } = this.state
+    const { currentCategory } = this.state
+    const { categories } = this.props
     return (
       <nav className="navbar navbar-default">
         <div className="container-fluid">
@@ -50,5 +54,9 @@ class CategoriesNav extends Component {
     )
   }
 }
-
-export default CategoriesNav
+function mapStateToProps({ categories }) {
+  return {
+    categories: Object.keys(categories).map(id => categories[id])
+  }
+}
+export default connect(mapStateToProps)(CategoriesNav)
