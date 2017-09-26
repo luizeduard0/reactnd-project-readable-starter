@@ -11,7 +11,7 @@ class PostForm extends Component {
     category: null
   }
   render() {
-    const { categories } = this.props
+    const { post = {}, categories } = this.props
     return (
       <div className='post-form'>
         <div className='row'>
@@ -21,7 +21,7 @@ class PostForm extends Component {
               <input
                 type="text"
                 name='title'
-                value={this.state.name}
+                value={post.title}
                 className='form-control input-lg'
                 placeholder="Title"
                 onChange={(e) => this.setState({ name: e.target.value })}
@@ -32,13 +32,14 @@ class PostForm extends Component {
                 name='body'
                 className='form-control'
                 placeholder="What do you want to say?"
-                onChange={(e) => this.setState({ body: e.target.value })}></textarea>
+                value={post.body}
+                onChange={(e) => this.setState({ body: e.target.value })} />
             </div>
             <div className='form-group'>
-              <select className='form-control'>
+              <select name="category" value={post.category} className='form-control'>
                 <option disabled>Choose the category</option>
                 {categories.map(category => (
-                  <option>{humanize(category.name)}</option>
+                  <option key={category.name} value={category.name}>{humanize(category.name)}</option>
                 ))}
               </select>
             </div>
@@ -49,9 +50,9 @@ class PostForm extends Component {
           <div className='col-md-7'>
             <div className='preview-box'>
               <label className='label label-info pull-right'>PREVIEW</label>
-              <h2>{this.state.name || 'Untitled'}</h2>
+              <h2>{post.title || 'Untitled'}</h2>
               <p style={{marginTop: '30px'}}>
-                {this.state.body || (
+                {post.body || (
                   <div>
                     <small className='preview-tip'>Type on the left to see the preview</small>
                     <ContentLoader type="list" />
@@ -65,9 +66,12 @@ class PostForm extends Component {
     )
   }
 }
-function mapStateToProps({ categories }) {
+function mapStateToProps({ categories, posts }, props) {
   return {
-    categories: Object.keys(categories).map(id => categories[id])
+    categories: Object.keys(categories).map(id => categories[id]),
+    post: Object.keys(posts)
+                .map(postId => posts[postId])
+                .filter(post => post.id === props.match.params.id)[0]
   }
 }
 export default connect(mapStateToProps)(PostForm)

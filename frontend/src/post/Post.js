@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import * as PostApi from './../posts/api'
 import { getPost } from './../posts/actions'
@@ -52,6 +52,9 @@ class Post extends Component {
           post.id && (
             <div className='post'>
               <h2 className='post-title'>
+                <Link to={`/post/${post.id}/edit`} className='btn btn-link pull-right'>
+                  <i className='fa fa-pencil'></i> Edit
+                </Link>
                 {post.title}
                 <small className='post-author'>{post.author}</small>
               </h2>
