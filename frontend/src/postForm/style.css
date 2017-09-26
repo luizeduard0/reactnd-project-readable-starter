@@ -1,0 +1,12 @@
+.preview-box {
+  padding: 20px;
+  box-shadow: rgba(0,0,0,.05) 0 5px 5px, rgba(0,0,0,.07) 0 20px 40px;
+  min-height: 500px;
+}
+
+.preview-tip {
+  display: block;
+  margin: 20px 0;
+  color: #ccc;
+  font-size: 16px;
+}
