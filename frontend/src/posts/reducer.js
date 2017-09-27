@@ -14,6 +14,7 @@ import {
 export default function posts(state = {}, action) {
   const { id, timestamp, title, body, author, category, voteScore }  = action
   let newState = {}
+  let newVoteScore = null
   switch(action.type) {
     case GET_POSTS:
       posts = {}
@@ -44,19 +45,21 @@ export default function posts(state = {}, action) {
       delete newState[id]
       return newState
     case UP_VOTE_POST:
+      newVoteScore = state[id].voteScore === -1 ? 1 : (state[id].voteScore + 1)
       return {
         ...state,
         [id]: {
           ...state[id],
-          voteScore: state[id].voteScore + 1
+          voteScore: newVoteScore
         }
       }
     case DOWN_VOTE_POST:
+      newVoteScore = state[id].voteScore === 1 ? -1 : (state[id].voteScore - 1)
       return {
         ...state,
         [id]: {
           ...state[id],
-          voteScore: state[id].voteScore - 1
+          voteScore: newVoteScore
         }
       }
     default:

@@ -76,13 +76,13 @@ class Vote extends Component {
           <div className='to-vote'>
             <button
               onClick={() => this.onVote(id, true)}
-              className={score < 0 ? 'active vote-dislike-it' : ' vote-dislike-it'}>
+              className={`vote-dislike-it ${score < 0 ? 'active' : ''}`}>
               <i className='glyphicon glyphicon-thumbs-down'></i>
               <span>{score < 0 && (score * (-1))}</span>
             </button>
             <button
               onClick={() => this.onVote(id)}
-              className={score > 0 ? 'active vote-like-it' : ' vote-like-it'}>
+              className={`vote-like-it ${score >= 0 ? 'active' : ''}`}>
               <span>{score > 0 && (score)}</span>
               <i className='glyphicon glyphicon-thumbs-up'></i>
             </button>

@@ -23,8 +23,19 @@
 
 .vote-tool .vote-result .to-vote .vote-like-it,
 .vote-tool .vote-result .to-vote .vote-dislike-it {
+  display: none;
   color: #aaa;
   outline: none;
+}
+
+.vote-tool .vote-result .to-vote .vote-like-it.active,
+.vote-tool .vote-result .to-vote .vote-dislike-it.active {
+  display: block;
+}
+
+.vote-tool .vote-result .to-vote:hover .vote-like-it,
+.vote-tool .vote-result .to-vote:hover .vote-dislike-it {
+  display: inline-block;
 }
 
 .vote-tool .vote-result .to-vote:hover .vote-dislike-it {
