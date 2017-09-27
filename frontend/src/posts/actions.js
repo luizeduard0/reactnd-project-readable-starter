@@ -2,6 +2,7 @@ export const GET_POSTS = 'GET_POSTS'
 export const GET_POST = 'GET_POST'
 export const CREATE_POST = 'CREATE_POST'
 export const UPDATE_POST = 'UPDATE_POST'
+export const DELETE_POST = 'DELETE_POST'
 
 export function getPosts(posts) {
   return {
@@ -27,5 +28,12 @@ export function createPost({ id, timestamp, title, body, author, category, voteS
     author,
     category,
     voteScore
+  }
+}
+
+export function deletePost(id) {
+  return {
+    type: DELETE_POST,
+    id
   }
 }

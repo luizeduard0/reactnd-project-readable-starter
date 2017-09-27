@@ -3,6 +3,7 @@ import {
   GET_POST,
   CREATE_POST,
   UPDATE_POST,
+  DELETE_POST
 } from './actions'
 
 import {
@@ -12,6 +13,7 @@ import {
 
 export default function posts(state = {}, action) {
   const { id, timestamp, title, body, author, category, voteScore }  = action
+  let newState = {}
   switch(action.type) {
     case GET_POSTS:
       posts = {}
@@ -37,6 +39,10 @@ export default function posts(state = {}, action) {
           voteScore
         }
       }
+    case DELETE_POST:
+      newState = { ...state }
+      delete newState[id]
+      return newState
     case UP_VOTE_POST:
       return {
         ...state,

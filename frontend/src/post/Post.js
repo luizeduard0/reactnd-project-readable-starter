@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { withRouter, Link } from 'react-router-dom'
+import { withRouter, Link, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import * as PostApi from './../posts/api'
-import { getPost } from './../posts/actions'
+import { getPost, deletePost } from './../posts/actions'
 import Vote from './../vote/Vote'
 import ContentLoader from 'react-content-loader'
 import Comments from './../comments/Comments'
@@ -14,7 +14,8 @@ class Post extends Component {
     loadingComments: false,
     postingComment: false,
     post: {},
-    comments: []
+    comments: [],
+    redirect: false
   }
   componentWillMount() {
     const postId = typeof this.props.match !== 'undefined' ? this.props.match.params.id : null
@@ -31,10 +32,18 @@ class Post extends Component {
         this.props.dispatch(getPost(post))
       })
   }
-
+  deletePost = id => {
+    this.props.dispatch(deletePost(id))
+    this.setState({ redirect: '/' })
+  }
   render() {
-    const { comments, loadingPost, loadingComments } = this.state
+    const { comments, loadingPost, loadingComments, redirect } = this.state
     const { post } = this.props
+
+    if(redirect) {
+      return <Redirect to={redirect} />
+    }
+
     return (
       <div className='post-wrapper'>
         {loadingPost && (
@@ -45,8 +54,14 @@ class Post extends Component {
           post.id && (
             <div className='post'>
               <h2 className='post-title'>
-                <Link to={`/post/${post.id}/edit`} className='btn btn-link pull-right'>
-                  <i className='fa fa-pencil'></i> Edit
+                <button
+                  onClick={() => this.deletePost(post.id)}
+                  className='btn btn-danger pull-right'
+                  style={{ background: 'transparent', color: '#d43f3a' }}>
+                  <i className='glyphicon glyphicon-trash'></i> Delete
+                </button>
+                <Link to={`/post/${post.id}/edit`} className='btn btn-link pull-right' style={{ marginRight: '15px', borderRight: '1px solid #eee' }}>
+                  <i className='glyphicon glyphicon-pencil'></i> Edit
                 </Link>
                 {post.title}
                 <small className='post-author'>{post.author}</small>

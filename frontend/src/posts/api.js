@@ -1,4 +1,4 @@
-import { get, post } from './../utils/api'
+import { get, post, deleteRequest } from './../utils/api'
 
 export const getPosts = () => {
   return get(`/posts`)
@@ -22,6 +22,11 @@ export const createPost = ({ id, title, body, author, category, timestamp }) => 
     timestamp
   })
   .then(res => res.json())
+}
+
+export const deletePost = id => {
+  return deleteRequest(`/posts/${id}`)
+    .then(res => res.json())
 }
 
 export const getPostComment = id => {
