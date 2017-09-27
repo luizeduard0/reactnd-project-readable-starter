@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import * as PostApi from './../posts/api'
 import { getPost, createPost } from './../posts/actions'
@@ -7,6 +8,7 @@ import humanize from 'string-humanize'
 import serializeForm from 'form-serialize'
 import { uuid } from './../utils/helpers'
 import AlertContainer from 'react-alert'
+import { notify } from './../notificationSystem/actions'
 import './../post/style.css'
 import './style.css'
 
@@ -16,7 +18,8 @@ class PostForm extends Component {
     title: 'Untitled',
     body: '',
     category: '',
-    author: ''
+    author: '',
+    redirect: false,
   }
   componentWillMount() {
     const postId = typeof this.props.match !== 'undefined' ? this.props.match.params.id : null
@@ -75,13 +78,24 @@ class PostForm extends Component {
       .then(response => {
         if(response.id) {
           this.props.dispatch(createPost(response))
+          this.props.dispatch(notify({
+            id: uuid(),
+            type: 'success',
+            message: `The post was created on ${post.category}`
+          }))
+          this.setState({ redirect: `/${post.category}/${post.id}` })
         }
       })
 
   }
   render() {
-    const { title, body, category, author } = this.state
+    const { title, body, category, author, redirect } = this.state
     const { post = {}, categories } = this.props
+
+    if(redirect) {
+      return <Redirect to={redirect} />
+    }
+
     return (
       <div className='post-form'>
         <AlertContainer ref={a => this.msg = a} {...this.alertOptions} />
