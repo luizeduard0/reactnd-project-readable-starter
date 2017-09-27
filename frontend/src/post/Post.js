@@ -6,7 +6,6 @@ import { getPost } from './../posts/actions'
 import Vote from './../vote/Vote'
 import ContentLoader from 'react-content-loader'
 import Comments from './../comments/Comments'
-import AlertContainer from 'react-alert'
 import './style.css'
 
 class Post extends Component {
@@ -32,18 +31,12 @@ class Post extends Component {
         this.props.dispatch(getPost(post))
       })
   }
-  showAlert = () => {
-    this.msg.show('Some text or component', {
-      time: 2000,
-      type: 'success'
-    })
-  }
+
   render() {
     const { comments, loadingPost, loadingComments } = this.state
     const { post } = this.props
     return (
       <div className='post-wrapper'>
-        <AlertContainer ref={a => this.msg = a} {...this.alertOptions} />
         {loadingPost && (
           <div style={{maxWidth: '500px'}}>
             <ContentLoader type="list" />

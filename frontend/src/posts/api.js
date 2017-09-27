@@ -12,6 +12,18 @@ export const getPost = id => {
   return get(`/posts/${id}`)
 }
 
+export const createPost = ({ id, title, body, author, category, timestamp }) => {
+  return post(`/posts`, {
+    id,
+    title,
+    body,
+    author,
+    category,
+    timestamp
+  })
+  .then(res => res.json())
+}
+
 export const getPostComment = id => {
   return get(`/posts/${id}/comments`)
 }

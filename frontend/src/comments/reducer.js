@@ -27,6 +27,7 @@ export default function comments(state = {}, action) {
           body,
           author,
           parentId,
+          timestamp,
           voteScore
         }
       }

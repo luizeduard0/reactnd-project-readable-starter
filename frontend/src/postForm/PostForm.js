@@ -1,17 +1,22 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import * as PostApi from './../posts/api'
-import { getPost } from './../posts/actions'
+import { getPost, createPost } from './../posts/actions'
 import ContentLoader from 'react-content-loader'
 import humanize from 'string-humanize'
+import serializeForm from 'form-serialize'
+import { uuid } from './../utils/helpers'
+import AlertContainer from 'react-alert'
+import './../post/style.css'
 import './style.css'
 
 class PostForm extends Component {
   state = {
     loadingPost: false,
     title: 'Untitled',
-    body: null,
-    category: null
+    body: '',
+    category: '',
+    author: ''
   }
   componentWillMount() {
     const postId = typeof this.props.match !== 'undefined' ? this.props.match.params.id : null
@@ -30,56 +35,122 @@ class PostForm extends Component {
         this.props.dispatch(getPost(post))
       })
   }
+  handleCreateOrUpdatePost = (e) => {
+    e.preventDefault()
+    const values = serializeForm(e.target, { hash: true })
+
+    const { title, body, author, category } = values
+
+    if(!title) {
+      this.msg.error('You need to name your post.')
+      return
+    }
+
+    if(!body) {
+      this.msg.error('You can\'t post a blank page (:')
+      return
+    }
+
+    if(!author) {
+      this.msg.error('You need to inform the author')
+      return
+    }
+
+    if(!category) {
+      this.msg.error('You need to inform a category')
+      return
+    }
+
+    const post = {
+      id: uuid(),
+      title,
+      body,
+      author,
+      category,
+      timestamp: new Date().getTime(),
+      voteScore: 0
+    }
+
+    PostApi.createPost(post)
+      .then(response => {
+        if(response.id) {
+          this.props.dispatch(createPost(response))
+        }
+      })
+
+  }
   render() {
-    const { title, body, category } = this.state
+    const { title, body, category, author } = this.state
     const { post = {}, categories } = this.props
     return (
       <div className='post-form'>
+        <AlertContainer ref={a => this.msg = a} {...this.alertOptions} />
         <div className='row'>
           <div className='col-md-5'>
             <h2>Create or Update</h2>
-            <div className='form-group'>
-              <input
-                type="text"
-                name='title'
-                value={title}
-                className='form-control input-lg'
-                placeholder="Title"
-                onChange={(e) => this.setState({ title: e.target.value })}
-               />
-            </div>
-            <div className='form-group'>
-              <textarea
-                name='body'
-                className='form-control'
-                placeholder="What do you want to say?"
-                value={body}
-                onChange={(e) => this.setState({ body: e.target.value })} />
-            </div>
-            <div className='form-group'>
-              <select name="category" value={category} className='form-control'>
-                <option disabled>Choose the category</option>
-                {categories.map(category => (
-                  <option key={category.name} value={category.name}>{humanize(category.name)}</option>
-                ))}
-              </select>
-            </div>
-            <div className='form-group'>
-              <button className='btn btn-success'>Save or Update Post</button>
-            </div>
+            <form onSubmit={this.handleCreateOrUpdatePost}>
+              <div className='form-group'>
+                <input
+                  type="text"
+                  name='title'
+                  value={title}
+                  className='form-control input-lg'
+                  placeholder="Title"
+                  onChange={(e) => this.setState({ title: e.target.value })}
+                 />
+              </div>
+              <div className='form-group'>
+                <textarea
+                  name='body'
+                  className='form-control'
+                  placeholder="What do you want to say?"
+                  value={body}
+                  onChange={(e) => this.setState({ body: e.target.value })} />
+              </div>
+              <div className='form-group'>
+                <input
+                  type="text"
+                  name='author'
+                  value={author}
+                  className='form-control'
+                  placeholder="Author"
+                  onChange={(e) => this.setState({ author: e.target.value })}
+                 />
+              </div>
+              <div className='form-group'>
+                <select
+                  name="category"
+                  value={category}
+                  className='form-control'
+                  onChange={(e) => this.setState({ category: e.target.value })}>
+                  <option value='' disabled>Choose the category</option>
+                  {categories.map(category => (
+                    <option key={category.name} value={category.name}>{humanize(category.name)}</option>
+                  ))}
+                </select>
+              </div>
+              <div className='form-group'>
+                <button type="submit" className='btn btn-success'>Save or Update Post</button>
+              </div>
+            </form>
           </div>
           <div className='col-md-7'>
             <div className='preview-box'>
               <label className='label label-info pull-right'>PREVIEW</label>
-              <h2>{title || 'Untitled'}</h2>
-              <p style={{marginTop: '30px'}}>
-                {body || (
-                  <div>
-                    <small className='preview-tip'>Type on the left to see the preview</small>
-                    <ContentLoader type="list" />
-                  </div>
-                )}
-              </p>
+              <div className='post'>
+                <h2 className='post-title'>
+                  {title || 'Untitled'}
+                  <small className='post-author'>{author || 'by an unknown Author'}</small>
+                </h2>
+                <div className='post-body' style={{marginTop: '30px'}}>
+                  {body || (
+                    <div>
+                      <small className='preview-tip'>Type on the left to see the preview</small>
+                      <ContentLoader type="list" />
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
         </div>

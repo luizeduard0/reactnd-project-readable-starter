@@ -7,6 +7,7 @@ import Comment from './../comment/Comment'
 import PropTypes from 'prop-types'
 import serializeForm from 'form-serialize'
 import { uuid } from './../utils/helpers'
+import AlertContainer from 'react-alert'
 import './style.css'
 
 class Comments extends Component {
@@ -32,7 +33,6 @@ class Comments extends Component {
   onPostComment = e => {
     e.preventDefault()
     const values = serializeForm(e.target, { hash: true })
-
 
     if(!values.author) {
       this.msg.error('You need to provide your name to place a comment')
@@ -63,13 +63,13 @@ class Comments extends Component {
     e.target.author.value = ''
     e.target.body.value = ''
   }
-
   render() {
 
     const { post, comments = [] } = this.props
 
     return (
       <div className='post-comments'>
+        <AlertContainer ref={a => this.msg = a} {...this.alertOptions} />
         <div className='new-comment'>
           <form onSubmit={this.onPostComment}>
             <input type="hidden" name='parentId' value={post.id} />
