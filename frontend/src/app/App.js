@@ -4,6 +4,7 @@ import Posts from './../posts/Posts'
 import Post from './../post/Post'
 import PostForm from './../postForm/PostForm'
 import NoMatch from './../nomatch/NoMatch'
+import NotificationSystem from './../notificationSystem/NotificationSystem'
 import { Route, Switch } from 'react-router-dom'
 import './App.css'
 
@@ -12,6 +13,9 @@ class App extends Component {
     return (
       <div className="app">
         <CategoriesNav />
+        <div className='app-header'>
+          <NotificationSystem />
+        </div>
         <div className='app-body'>
           <Switch>
             <Route exact path='/' component={Posts} />

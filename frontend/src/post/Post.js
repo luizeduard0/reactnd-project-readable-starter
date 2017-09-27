@@ -6,6 +6,8 @@ import { getPost, deletePost } from './../posts/actions'
 import Vote from './../vote/Vote'
 import ContentLoader from 'react-content-loader'
 import Comments from './../comments/Comments'
+import { notify } from './../notificationSystem/actions'
+import { uuid } from './../utils/helpers'
 import './style.css'
 
 class Post extends Component {
@@ -37,6 +39,11 @@ class Post extends Component {
       .then(response => {
         if(response.deleted) {
           this.props.dispatch(deletePost(id))
+          this.props.dispatch(notify({
+            id: uuid(),
+            type: 'success',
+            message: 'The post was deleted'
+          }))
           this.setState({ redirect: '/' })
         }
       })
