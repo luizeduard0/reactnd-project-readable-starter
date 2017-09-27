@@ -33,8 +33,13 @@ class Post extends Component {
       })
   }
   deletePost = id => {
-    this.props.dispatch(deletePost(id))
-    this.setState({ redirect: '/' })
+    PostApi.deletePost(id)
+      .then(response => {
+        if(response.deleted) {
+          this.props.dispatch(deletePost(id))
+          this.setState({ redirect: '/' })
+        }
+      })
   }
   render() {
     const { comments, loadingPost, loadingComments, redirect } = this.state
