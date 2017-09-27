@@ -6,6 +6,8 @@ import * as CommentApi from './../comments/api'
 import PropTypes from 'prop-types'
 import { votePostUp, votePostDown } from './actions'
 import { voteCommentUp, voteCommentDown } from './../comments/actions'
+import { notify } from './../notificationSystem/actions'
+import { uuid } from './../utils/helpers'
 import './style.css'
 
 class Vote extends Component {
@@ -24,7 +26,14 @@ class Vote extends Component {
   }
   postVoteHandler(id, downVote) {
     if(downVote) {
-      if(this.state.voted === 'downVote') return
+      if(this.state.voted === 'downVote') {
+        this.props.dispatch(notify({
+          id: uuid(),
+          type: 'error',
+          message: 'You already voted'
+        }))
+        return
+      }
       PostApi.vote(id, 'downVote')
         .then(res => {
           this.setState({voted: 'downVote'})
@@ -32,7 +41,14 @@ class Vote extends Component {
         })
       return
     }
-    if(this.state.voted === 'upVote') return
+    if(this.state.voted === 'upVote') {
+      this.props.dispatch(notify({
+        id: uuid(),
+        type: 'error',
+        message: 'You already voted'
+      }))
+      return
+    }
     PostApi.vote(id, 'upVote')
       .then(res => {
         this.setState({voted: 'upVote'})

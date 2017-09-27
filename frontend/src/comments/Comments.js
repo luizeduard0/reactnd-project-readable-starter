@@ -81,7 +81,7 @@ class Comments extends Component {
               <input
                 type="text"
                 name='body'
-                placeholder="Type your comment here"
+                placeholder="Type your comment and press enter"
                 autoComplete="off" />
                 <button type="submit" style={{ display: 'none' }}></button>
               </form>
