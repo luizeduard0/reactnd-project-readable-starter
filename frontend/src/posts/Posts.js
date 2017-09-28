@@ -11,8 +11,8 @@ class Posts extends Component {
   state = {
     posts: [],
     sortBy: {
-      "timestamp": "desc",
-      "voteScore": null,
+      "timestamp": null,
+      "voteScore": "desc",
     }
   }
 
@@ -73,11 +73,12 @@ class Posts extends Component {
 
   }
   getCurrentSortField = () => {
-    return Object.keys(this.state.sortBy).map((value, field) => value)[0]
+    return Object.keys(this.state.sortBy).filter(field => this.state.sortBy[field])
   }
   sortPosts = posts => {
     let currentSortField = this.getCurrentSortField()
     let currentSortValue = this.state.sortBy[currentSortField]
+
     return posts.sort((p1, p2) => {
       if(currentSortValue === 'asc') return p1[currentSortField] > p2[currentSortField]
       if(currentSortValue === 'desc') return p1[currentSortField] < p2[currentSortField]
