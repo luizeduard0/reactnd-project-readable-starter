@@ -108,7 +108,7 @@ function mapStateToProps({ comments }, props) {
     comments: Object.keys(comments)
                     .map(commentId => comments[commentId])
                     .filter(comment => comment.parentId === props.post.id)
-                    .sort((c1, c2) => c1.timestamp < c2.timestamp)
+                    .sort((c1, c2) => c1.voteScore < c2.voteScore)
   }
 }
 
