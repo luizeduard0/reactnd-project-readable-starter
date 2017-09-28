@@ -21,3 +21,21 @@
 .not-found-page h2 small{
   display: block;
 }
+
+
+.toolbar {
+  border: 1px solid #eee;
+  border-bottom: 0;
+  background: #fafafa;
+  padding: 5px;
+  text-align: right;
+}
+.toolbar ul {
+  margin: 0;
+  padding: 0;
+}
+.toolbar ul  li{
+  display: inline-block;
+  list-style: none;
+  margin-left: 3px;
+}

@@ -9,7 +9,11 @@ import './style.css'
 class Posts extends Component {
 
   state = {
-    posts: []
+    posts: [],
+    sortBy: {
+      "timestamp": "desc",
+      "voteScore": null,
+    }
   }
 
   componentDidMount() {
@@ -36,8 +40,53 @@ class Posts extends Component {
       this.props.dispatch(getPostAction(posts))
     })
   }
+  sort = field => {
+    let currentState = this.state.sortBy[field]
+    let nextState = null
+    let otherFields = Object.keys(this.state.sortBy)
+                            .filter(f => f !== field)
+                            .map(f => {
+                              let obj = {}
+                              obj[f] = null
+                              return obj
+                            })
+
+    switch(currentState) {
+      case 'asc':
+        nextState = 'desc'
+        break
+      case 'desc':
+        nextState = 'asc'
+        break
+      default:
+        nextState = 'asc'
+        break
+    }
+
+    let sortByState = { [field]: nextState }
+
+    otherFields.map(field => {
+      sortByState[field] = null
+    })
+
+    this.setState({ sortBy: sortByState })
+
+  }
+  getCurrentSortField = () => {
+    return Object.keys(this.state.sortBy).map((value, field) => value)[0]
+  }
+  sortPosts = posts => {
+    let currentSortField = this.getCurrentSortField()
+    let currentSortValue = this.state.sortBy[currentSortField]
+    return posts.sort((p1, p2) => {
+      if(currentSortValue === 'asc') return p1[currentSortField] > p2[currentSortField]
+      if(currentSortValue === 'desc') return p1[currentSortField] < p2[currentSortField]
+      return true
+    })
+  }
   render() {
     const { posts } = this.props
+    const { sortBy } = this.state
     return (
       <div>
         <Link
@@ -47,7 +96,31 @@ class Posts extends Component {
         </Link>
         <div className='clearfix'></div>
         <div className='posts'>
-          {posts && posts.map(post => (
+          <div className='toolbar'>
+            <ul>
+              <li>
+                <button
+                  onClick={() => this.sort('voteScore')}
+                  className='btn btn-default btn-sm'>
+                  {sortBy['voteScore'] && (
+                    <i className={`glyphicon  ${sortBy['voteScore'] === 'asc' ? 'glyphicon-sort-by-attributes' : 'glyphicon-sort-by-attributes-alt'}`}></i>
+                  )}
+                  {' '}Vote Score
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => this.sort('timestamp')}
+                  className='btn btn-default btn-sm'>
+                  {sortBy['timestamp'] && (
+                    <i className={`glyphicon  ${sortBy['timestamp'] === 'asc' ? 'glyphicon-sort-by-attributes' : 'glyphicon-sort-by-attributes-alt'}`}></i>
+                  )}
+                  {' '}Date
+                </button>
+              </li>
+            </ul>
+          </div>
+          {posts && this.sortPosts(posts).map(post => (
             <PostThread key={post.id} post={post} />
           ))}
           {!posts.length && (
@@ -58,7 +131,7 @@ class Posts extends Component {
     )
   }
 }
-function mapStateToProps({ posts }) {
+function mapStateToProps({ posts }, props) {
   return {
     posts: Object.keys(posts).map(postId => posts[postId])
   }
