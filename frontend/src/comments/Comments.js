@@ -50,7 +50,7 @@ class Comments extends Component {
       author: values.author,
       body: values.body,
       timestamp: new Date().getTime(),
-      voteScore: 0
+      voteScore: 1
     }
 
     this.setState({ postingComment: true })
