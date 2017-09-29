@@ -75,6 +75,7 @@
  .vote-tool.small {
    display: inline-block;
    float: none;
+   margin-left: 5px;
  }
 
  .vote-tool.small .to-vote {
