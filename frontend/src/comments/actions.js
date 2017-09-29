@@ -24,7 +24,7 @@ export function addComment({ id, body, author, parentId, voteScore, timestamp })
   }
 }
 
-export function editComment(id, body) {
+export function editComment({id, body}) {
   return {
     type: EDIT_COMMENT,
     id,

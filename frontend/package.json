@@ -11,6 +11,7 @@
     "react-addons-shallow-compare": "^15.6.0",
     "react-alert": "^2.3.0",
     "react-avatar": "^2.4.0",
+    "react-bootstrap": "^0.31.3",
     "react-dom": "^15.6.1",
     "react-loaders": "^2.5.0",
     "react-moment": "^0.6.5",

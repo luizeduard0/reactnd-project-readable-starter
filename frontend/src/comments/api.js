@@ -1,4 +1,4 @@
-import { get, post, deleteRequest } from './../utils/api'
+import { get, post, put, deleteRequest } from './../utils/api'
 
 export const postComment = comment => {
   return post('/comments', comment)
@@ -10,6 +10,11 @@ export const vote = (id, option) => {
 
 export const getCommentDetail = id =>{
   return get(`/comments/${id}`)
+}
+
+export const editComment = ({id, body}) => {
+  return put(`/comments/${id}`, { id, body })
+         .then(res => res.json())
 }
 
 export const deleteComment = id => {

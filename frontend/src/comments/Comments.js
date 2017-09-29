@@ -9,9 +9,15 @@ import serializeForm from 'form-serialize'
 import { uuid } from './../utils/helpers'
 import AlertContainer from 'react-alert'
 import { notify } from './../notificationSystem/actions'
+import { Modal } from 'react-bootstrap'
 import './style.css'
 
 class Comments extends Component {
+
+  state = {
+    showEditCommentModal: false,
+    commentBeingEdited: {}
+  }
 
   static propTypes = {
     post: PropTypes.object.isRequired,
@@ -64,7 +70,25 @@ class Comments extends Component {
     e.target.author.value = ''
     e.target.body.value = ''
   }
-  handleCommentEdit = ({id, body}) => {
+  handleCommentEditModal = commentBeingEdited => {
+    this.setState({
+      commentBeingEdited,
+      showEditCommentModal: true
+    })
+  }
+  handleCommentEdit = () => {
+    CommentApi.editComment(this.state.commentBeingEdited)
+      .then(response => {
+        if(response.id) {
+          this.props.editComment(this.state.commentBeingEdited)
+          this.props.notify({
+            id: uuid(),
+            type: 'success',
+            message: 'The comment has been updated'
+          })
+          this.setState({ showEditCommentModal: false })
+        }
+      })
   }
   handleCommentDelete = id => {
     CommentApi.deleteComment(id)
@@ -82,6 +106,7 @@ class Comments extends Component {
   render() {
 
     const { post, comments = [] } = this.props
+    const { showEditCommentModal, commentBeingEdited } = this.state
 
     return (
       <div className='post-comments'>
@@ -112,12 +137,35 @@ class Comments extends Component {
                 <Comment
                   key={comment.id}
                   comment={comment}
-                  onEdit={() => this.handleCommentEdit(comment)}
+                  onEdit={() => this.handleCommentEditModal(comment)}
                   onDelete={() => this.handleCommentDelete(comment.id)} />
               ))
             ) || (
               <p className='no-comments'>No comments yet, be the first to comment.</p>
             )}
+
+            <Modal show={showEditCommentModal} onHide={this.close}>
+              <Modal.Header closeButton>
+                <Modal.Title>Your comment</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <textarea
+                  className='form-control'
+                  value={commentBeingEdited.body}
+                  onChange={e => {
+                    e.persist()
+                    this.setState(state => ({
+                      commentBeingEdited: {
+                        ...state['commentBeingEdited'],
+                        'body': e.target.value
+                    }})
+                  )}}></textarea>
+              </Modal.Body>
+              <Modal.Footer>
+                <button className='btn btn-primary' onClick={() => this.handleCommentEdit()}>Save</button>
+              </Modal.Footer>
+            </Modal>
+
         </div>
       )
   }
@@ -136,6 +184,7 @@ function mapDispatchToProps(dispatch) {
   return {
     getComments: data => dispatch(getComments(data)),
     addComment: data => dispatch(addComment(data)),
+    editComment: data => dispatch(editComment(data)),
     deleteComment: data => dispatch(deleteComment(data)),
     notify: data => dispatch(notify(data)),
   }
