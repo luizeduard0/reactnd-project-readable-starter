@@ -21,3 +21,19 @@
   float: right;
   color: #aaa;
 }
+
+.post-comment-body {
+  margin-left: 50px;
+}
+
+.post-comment-actions {
+
+}
+
+.post-comment-actions button {
+  border: 0;
+  background: transparent;
+  color: #aaa;
+  font-size: 11px;
+  padding: 5px 10px 5px 0;
+}

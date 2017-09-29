@@ -40,9 +40,12 @@ export default function comments(state = {}, action) {
         }
       }
     case DELETE_COMMENT:
-      newState = state
-      delete newState[id]
-      return newState
+      return {
+        ...state,
+        [id]: {
+          deleted: true
+        }
+      }
 
     case VOTE_COMMENT_UP:
       newVoteScore = state[id].voteScore + 1

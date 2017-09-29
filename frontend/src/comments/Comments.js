@@ -2,12 +2,13 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import * as PostApi from './../posts/api'
 import * as CommentApi from './../comments/api'
-import { addComment, getComments } from './actions'
+import { addComment, getComments, editComment, deleteComment } from './actions'
 import Comment from './../comment/Comment'
 import PropTypes from 'prop-types'
 import serializeForm from 'form-serialize'
 import { uuid } from './../utils/helpers'
 import AlertContainer from 'react-alert'
+import { notify } from './../notificationSystem/actions'
 import './style.css'
 
 class Comments extends Component {
@@ -63,6 +64,21 @@ class Comments extends Component {
     e.target.author.value = ''
     e.target.body.value = ''
   }
+  handleCommentEdit = ({id, body}) => {
+  }
+  handleCommentDelete = id => {
+    CommentApi.deleteComment(id)
+      .then(response => {
+        if(response.id) {
+          this.props.deleteComment(id)
+          this.props.notify({
+            id: uuid(),
+            type: 'success',
+            message: 'The comment has been deleted'
+          })
+        }
+      })
+  }
   render() {
 
     const { post, comments = [] } = this.props
@@ -93,7 +109,11 @@ class Comments extends Component {
             </div>
             {comments.length && (
               comments.map(comment => (
-                <Comment key={comment.id} comment={comment} />
+                <Comment
+                  key={comment.id}
+                  comment={comment}
+                  onEdit={() => this.handleCommentEdit(comment)}
+                  onDelete={() => this.handleCommentDelete(comment.id)} />
               ))
             ) || (
               <p className='no-comments'>No comments yet, be the first to comment.</p>
@@ -115,7 +135,9 @@ function mapStateToProps({ comments }, props) {
 function mapDispatchToProps(dispatch) {
   return {
     getComments: data => dispatch(getComments(data)),
-    addComment: data => dispatch(addComment(data))
+    addComment: data => dispatch(addComment(data)),
+    deleteComment: data => dispatch(deleteComment(data)),
+    notify: data => dispatch(notify(data)),
   }
 }
 
