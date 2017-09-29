@@ -19,3 +19,8 @@
 .post .post-body{
   padding: 15px 5px;
 }
+
+.post .post-date {
+  color: #aaa;
+  padding-top: 10px;
+}

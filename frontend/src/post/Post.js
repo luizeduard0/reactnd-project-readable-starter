@@ -8,6 +8,7 @@ import ContentLoader from 'react-content-loader'
 import Comments from './../comments/Comments'
 import { notify } from './../notificationSystem/actions'
 import { uuid } from './../utils/helpers'
+import Moment from 'react-moment'
 import './style.css'
 
 class Post extends Component {
@@ -85,6 +86,10 @@ class Post extends Component {
                   type='post' />
 
                 {post.body}
+
+                <div className='post-date'>
+                  Posted at <Moment format="DD/MM/YYYY">{post.timestamp}</Moment>
+                </div>
 
                 <Comments
                   post={post}
