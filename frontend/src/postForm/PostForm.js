@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import * as PostApi from './../posts/api'
-import { getPost, createPost } from './../posts/actions'
+import { getPost, createPost, updatePost } from './../posts/actions'
 import ContentLoader from 'react-content-loader'
 import humanize from 'string-humanize'
 import serializeForm from 'form-serialize'
@@ -15,6 +15,7 @@ import './style.css'
 class PostForm extends Component {
   state = {
     loadingPost: false,
+    id: '',
     title: 'Untitled',
     body: '',
     category: '',
@@ -31,9 +32,11 @@ class PostForm extends Component {
       .then(post => {
         this.setState({
           loadingPost: false,
+          id: post.id,
           title: post.title,
           body: post.body,
           category: post.category,
+          author: post.author,
         })
         this.props.dispatch(getPost(post))
       })
@@ -42,7 +45,7 @@ class PostForm extends Component {
     e.preventDefault()
     const values = serializeForm(e.target, { hash: true })
 
-    const { title, body, author, category } = values
+    const { id, title, body, author, category } = values
 
     if(!title) {
       this.msg.error('You need to name your post.')
@@ -65,7 +68,7 @@ class PostForm extends Component {
     }
 
     const post = {
-      id: uuid(),
+      id: id ? id : uuid(),
       title,
       body,
       author,
@@ -74,6 +77,21 @@ class PostForm extends Component {
       voteScore: 0
     }
 
+    if(id) {
+      PostApi.updatePost({ id, title, body })
+        .then(response => {
+          console.log('RESPONSE', response)
+          if(response.id) {
+            this.props.dispatch(updatePost({ id, title, body }))
+            this.props.dispatch(notify({
+              id: uuid(),
+              type: 'success',
+              message: `The post has been updated`
+            }))
+          }
+        })
+      return
+    }
     PostApi.createPost(post)
       .then(response => {
         if(response.id) {
@@ -89,7 +107,7 @@ class PostForm extends Component {
 
   }
   render() {
-    const { title, body, category, author, redirect } = this.state
+    const { id, title, body, category, author, redirect } = this.state
     const { post = {}, categories } = this.props
 
     if(redirect) {
@@ -103,6 +121,9 @@ class PostForm extends Component {
           <div className='col-md-5'>
             <h2>Create or Update</h2>
             <form onSubmit={this.handleCreateOrUpdatePost}>
+              <input
+                type="hidden" name="id" value={id}
+                onChange={(e) => this.setState({ id: e.target.value })} />
               <div className='form-group'>
                 <input
                   type="text"

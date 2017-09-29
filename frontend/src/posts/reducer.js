@@ -40,6 +40,15 @@ export default function posts(state = {}, action) {
           voteScore
         }
       }
+    case UPDATE_POST:
+      return {
+        ...state,
+        [id]: {
+          ...state[id],
+          title,
+          body
+        }
+      }
     case DELETE_POST:
       newState = { ...state }
       delete newState[id]

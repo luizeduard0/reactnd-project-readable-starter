@@ -31,6 +31,15 @@ export function createPost({ id, timestamp, title, body, author, category, voteS
   }
 }
 
+export function updatePost({ id, title, body }) {
+  return {
+    type: UPDATE_POST,
+    id,
+    title,
+    body
+  }
+}
+
 export function deletePost(id) {
   return {
     type: DELETE_POST,

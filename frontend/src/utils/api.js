@@ -30,3 +30,14 @@ export const deleteRequest = (url, params) => {
     }
   })
 }
+
+export const put = (url, params) => {
+  return fetch(`${API_URL}${url}`, {
+    method: 'PUT',
+    body: params ? JSON.stringify(params) : {},
+    headers: {
+      'Authorization': token,
+      'Content-Type': 'application/json'
+    }
+  })
+}
