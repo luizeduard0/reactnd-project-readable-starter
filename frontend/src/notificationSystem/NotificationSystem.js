@@ -26,7 +26,7 @@ class NotificationSystem extends Component {
       <div className='notification-system'>
         {notifications.length && (
           notifications.map(notification => (
-            <div onClick={() => this.dismissNotification(notification.id)} className={`notification ${notification.type}`}>
+            <div key={notification.id} onClick={() => this.dismissNotification(notification.id)} className={`notification ${notification.type}`}>
               <i className='glyphicon glyphicon-remove remove-notification'></i>
               {notification.message}
             </div>
