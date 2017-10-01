@@ -5,6 +5,10 @@
   cursor: pointer;
 }
 
+.post-thread a:hover {
+  text-decoration: none;
+}
+
 .post-thread:hover {
   background: #fafafa;
 }
@@ -21,4 +25,8 @@
 
 .post-thread .post-thread-author {
   color: #888;
+}
+
+.post-thread-date {
+  color: #aaa;
 }
