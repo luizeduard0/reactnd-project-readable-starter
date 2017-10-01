@@ -88,6 +88,7 @@ class PostForm extends Component {
               type: 'success',
               message: `The post has been updated`
             }))
+            this.setState({ redirect: `/post/${id}` })
           }
         })
       return
