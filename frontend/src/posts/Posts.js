@@ -11,6 +11,7 @@ class Posts extends Component {
   state = {
     posts: [],
     sortBy: {
+      "author": null,
       "timestamp": null,
       "voteScore": "desc",
     }
@@ -99,6 +100,16 @@ class Posts extends Component {
         <div className='posts'>
           <div className='toolbar'>
             <ul>
+              <li>
+                <button
+                  onClick={() => this.sort('author')}
+                  className='btn btn-default btn-sm'>
+                  {sortBy['author'] && (
+                    <i className={`glyphicon  ${sortBy['author'] === 'asc' ? 'glyphicon-sort-by-attributes' : 'glyphicon-sort-by-attributes-alt'}`}></i>
+                  )}
+                  {' '}Author
+                </button>
+              </li>
               <li>
                 <button
                   onClick={() => this.sort('voteScore')}
