@@ -30,3 +30,19 @@
 .post-thread-date {
   color: #aaa;
 }
+
+.post-thread-actions  {
+  float: right;
+  margin-right: 115px;
+}
+
+.post-thread-actions .deletePost,
+.post-thread-actions .editPost {
+  display: none;
+  font-size: 10px;
+}
+
+.post-thread:hover .post-thread-actions .deletePost,
+.post-thread:hover .post-thread-actions .editPost {
+  display: inline-block;
+}
