@@ -144,7 +144,7 @@ class Comments extends Component {
               <p className='no-comments'>No comments yet, be the first to comment.</p>
             )}
 
-            <Modal show={showEditCommentModal} onHide={this.close}>
+            <Modal show={showEditCommentModal} onHide={() => this.setState({ showEditCommentModal: false})}>
               <Modal.Header closeButton>
                 <Modal.Title>Your comment</Modal.Title>
               </Modal.Header>

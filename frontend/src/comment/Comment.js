@@ -16,8 +16,8 @@ const Comment = ({ comment, onEdit, onDelete }) => (
       {comment.body}
       <Vote id={comment.id} type='comment' score={comment.voteScore} size='small' />
       <div className='post-comment-actions'>
-        <button onClick={onEdit}>Edit</button>
-        <button onClick={onDelete}>Delete</button>
+        <button onClick={onEdit} className='post-comment-edit-btn'>Edit</button>
+        <button onClick={onDelete} className='post-comment-delete-btn'>Delete</button>
       </div>
     </div>
   </div>

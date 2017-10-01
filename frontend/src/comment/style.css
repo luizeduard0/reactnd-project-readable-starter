@@ -37,3 +37,20 @@
   font-size: 11px;
   padding: 5px 10px 5px 0;
 }
+
+.post-comment .post-comment-reply-btn{}
+
+.post-comment.hide-edit-delete-btns .post-comment-edit-btn,
+.post-comment.hide-edit-delete-btns .post-comment-delete-btn {
+  display: none;
+}
+
+.post-comment.hide-edit-delete-btns:hover .post-comment-edit-btn,
+.post-comment.hide-edit-delete-btns:hover .post-comment-delete-btn {
+  display: inline-block;
+}
+
+.post-comment:hover .post-comment-reply-btn {
+  color: #008cff;
+}
+  
