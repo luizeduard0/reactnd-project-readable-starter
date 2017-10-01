@@ -18,27 +18,21 @@ class Posts extends Component {
   }
 
   componentDidMount() {
-    let category = typeof this.props.match !== 'undefined' ? this.props.match.params.category : null
+    const category = !!this.props.match ? this.props.match.params.category : null
     this.getPosts(category)
   }
   componentWillReceiveProps(props) {
-    let category = typeof props.match !== 'undefined' ? props.match.params.category : null
+    const category = !!props.match ? props.match.params.category : null
     if(this.props.match.params.category !== category) {
       this.getPosts(category)
     }
   }
   getPosts(category) {
-    let response = null
-    if(category) {
-      response = PostApi.getPostsByCategory(category)
-    } else {
-      response = PostApi.getPosts()
-    }
-
+    let response = category ? PostApi.getPostsByCategory(category) : PostApi.getPosts()
     if(!response) return
 
     response.then(posts => {
-      this.props.dispatch(getPostAction(posts))
+      this.props.getPostAction(posts)
     })
   }
   sort = field => {
@@ -148,4 +142,9 @@ function mapStateToProps({ posts }, props) {
     posts: Object.keys(posts).map(postId => posts[postId])
   }
 }
-export default withRouter(connect(mapStateToProps)(Posts))
+function mapDispatchToProps(dispatch) {
+  return {
+    getPostAction: data => dispatch(getPostAction(data)),
+  }
+}
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Posts))

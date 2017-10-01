@@ -9,6 +9,7 @@ import Comments from './../comments/Comments'
 import { notify } from './../notificationSystem/actions'
 import { uuid } from './../utils/helpers'
 import Moment from 'react-moment'
+import NoMatch from '../nomatch/NoMatch'
 import './style.css'
 
 class Post extends Component {
@@ -98,13 +99,7 @@ class Post extends Component {
               </div>
             </div>
           ) || (
-            <div className='not-found-page'>
-              <div className='jumbo'>Whoops</div>
-              <h2>
-                Page not found
-                <small>404 &bull; Try using one of our categories above to find what you were looking for.</small>
-              </h2>
-            </div>
+            <NoMatch />
           )
         )}
       </div>

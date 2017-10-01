@@ -46,24 +46,26 @@ class PostForm extends Component {
     const values = serializeForm(e.target, { hash: true })
 
     const { id, title, body, author, category } = values
+    let error = false
 
     if(!title) {
-      this.msg.error('You need to name your post.')
-      return
+      error = 'You need to name your post.'
     }
 
-    if(!body) {
-      this.msg.error('You can\'t post a blank page (:')
-      return
+    if(!body && !error) {
+      error = 'You can\'t post a blank page (:'
     }
 
-    if(!author) {
-      this.msg.error('You need to inform the author')
-      return
+    if(!author && !error) {
+      error = 'You need to inform the author'
     }
 
-    if(!category) {
-      this.msg.error('You need to inform a category')
+    if(!category && !error) {
+      error = 'You need to inform a category'
+    }
+
+    if(error) {
+      this.msg.show(error)
       return
     }
 
@@ -199,7 +201,7 @@ function mapStateToProps({ categories, posts }, props) {
     categories: Object.keys(categories).map(id => categories[id]),
     post: Object.keys(posts)
                 .map(postId => posts[postId])
-                .filter(post => post.id === props.match.params.id)[0]
+                .find(post => post.id === props.match.params.id)
   }
 }
 export default connect(mapStateToProps)(PostForm)

@@ -27,45 +27,45 @@ class Vote extends Component {
   postVoteHandler(id, downVote) {
     if(downVote) {
       if(this.state.voted === 'downVote') {
-        this.props.dispatch(notify({
+        this.props.notify({
           id: uuid(),
           type: 'error',
           message: 'You already voted'
-        }))
+        })
         return
       }
       PostApi.vote(id, 'downVote')
         .then(res => {
           this.setState({voted: 'downVote'})
-          this.props.dispatch(votePostDown(id))
+          this.props.votePostDown(id)
         })
       return
     }
     if(this.state.voted === 'upVote') {
-      this.props.dispatch(notify({
+      this.props.notify({
         id: uuid(),
         type: 'error',
         message: 'You already voted'
-      }))
+      })
       return
     }
     PostApi.vote(id, 'upVote')
       .then(res => {
         this.setState({voted: 'upVote'})
-        this.props.dispatch(votePostUp(id))
+        this.props.votePostUp(id)
       })
   }
   commentVoteHandler(id, downVote) {
     if(downVote) {
       CommentApi.vote(id, 'downVote')
         .then(res => {
-          this.props.dispatch(voteCommentDown(id))
+          this.props.voteCommentDown(id)
         })
       return
     }
     CommentApi.vote(id, 'upVote')
       .then(res => {
-        this.props.dispatch(voteCommentUp(id))
+        this.props.voteCommentUp(id)
       })
   }
   render () {
@@ -100,4 +100,14 @@ Vote.propTypes = {
   size: PropTypes.oneOf(['small'])
 }
 
-export default withRouter(connect()(Vote))
+function mapDispatchToProps(dispatch) {
+  return {
+    notify: data => dispatch(notify(data)),
+    votePostDown: data => dispatch(votePostDown(data)),
+    votePostUp: data => dispatch(votePostUp(data)),
+    voteCommentUp: data => dispatch(voteCommentUp(data)),
+    voteCommentDown: data => dispatch(voteCommentDown(data)),
+  }
+}
+
+export default withRouter(connect(null, mapDispatchToProps)(Vote))
